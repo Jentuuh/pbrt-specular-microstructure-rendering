@@ -3,6 +3,7 @@ import numpy as np
 import sys 
 import math
 from gaussian import Gaussian
+import random
 np.set_printoptions(threshold=sys.maxsize)
 
 h = 1
@@ -165,30 +166,107 @@ def curved_elements_4d_ndf(normal_map, width, height):
             data.coeff = h * (h / math.sqrt(det))
         
         gaussians.append(data)
-    
-    for x in range(0, normal_map.shape[0]):
-        for y in range(0, normal_map.shape[1]):
-            if(x == 0 and y == 0):
-                for i, g in enumerate(gaussians):
-                    uv = np.array([float(x) / float(normal_map.shape[0]) ,float(y) / float(normal_map.shape[1])])
-                    print(g.evaluate(uv, sample_normal_map(normal_map, uv), invSigmaR2))
 
+    curved_elements_integration(512, 512, mX, mY, gaussians)
+
+    # resulting_img = np.zeros((normal_map.shape[0], normal_map.shape[1]))
+    # for x in range(0, normal_map.shape[0]):
+    #     for y in range(0, normal_map.shape[1]):
+    #         if(x == 256 and y == 277):
+    #             for i, g in enumerate(gaussians):
+    #                 uv = np.array([float(x) / float(normal_map.shape[0]) ,float(y) / float(normal_map.shape[1])])
+    #                 result = g.evaluate(uv, sample_normal_map(normal_map, uv), invSigmaR2)
+
+    #                 if result > 1000.0:
+    #                     resulting_img[int(g.position[0] * mX)][int(g.position[1] * mY)] = 1
+
+    #             cv2.imshow("impact", resulting_img)
+    #             cv2.waitKey()
+    #             return
+        
+
+
+def evaluate_gaussian(c, x, u, invCov):
+    inner = (x-u) @ (invCov @ (x-u).transpose())
+    return c * math.exp(-0.5 * inner)
     
+def get_gaussian_coefficient(invCov):
+    det = np.linalg.det(2.0 * math.pi * np.linalg.inv(invCov))
+    if det > 0.0:
+        return 1.0 / math.sqrt(det)
+    
+    return 0.0
 
 def curved_elements_integration(width, height, mX, mY, gaussians):
     ndf = np.zeros(width * height)
 
-    region_center = np.array([256, 256])
-    region_size = np.array([256, 256])
+    region_center = np.matrix([[256, 256]])
+    region_size = np.matrix([[256, 256]])
     origin = region_center - (region_size * 0.5)
 
-    footprint_radius = region_size[0] * 0.5 / float(mX)
+    footprint_radius = region_size[0, 0] * 0.5 / float(mX)
     sigma_p = footprint_radius * 0.5
 
-    footprint_cov_inv = np.linalg.inv(np.identity() * (sigma_p ** 2))
-    footprint_mean = (origin + (region_size * 0.5)) * np.array([1.0 / float(mX), 1.0 / float(mY)])
+    footprint_cov_inv = np.linalg.inv(np.identity(2) * (sigma_p ** 2))
+    footprint_mean = np.multiply((origin + (region_size * 0.5)), np.matrix([[1.0 / float(mX), 1.0 / float(mY)]]))
 
+    samples_per_pixel = 8
 
+    invW = 1.0 / float(width)
+    invH = 1.0 / float(height)
+
+    for y in range(height):
+        for x in range(width):
+            accum = 0.0
+            s = x * invW
+            t = y * invH
+
+            imageS = np.array([(s * 2.0) - 1.0, (t * 2.0) - 1.0])
+
+            if math.sqrt(imageS @ imageS) > 0.975:
+                ndf[y * width + x] = 0.0
+                continue
+
+            for sample_nr in range(samples_per_pixel):
+                s = (x + random.random()) * invW
+                t = (y + random.random()) * invH
+
+                # For each gaussian in the region
+                for gaussian_x in range(int(origin[0,0]), int(origin[0,0] + region_size[0,0])):
+                    for gaussian_y in range(int(origin[0,1]), int(origin[0,1] + region_size[0,1])):
+                        gaussian_data = gaussians[gaussian_y * mX + gaussian_x]
+                        gaussian_seed = np.array([gaussian_data.position[0], gaussian_data.position[1], gaussian_data.normal[0], gaussian_data.normal[1]])
+
+                                        # shift to [-1;1]
+                        S = np.array([(s * 2.0) - 1.0, (t * 2.0) - 1.0])
+                        S = S - np.array([gaussian_seed[2], gaussian_seed[3]])
+
+                        # Reduce 4D gaussian to 2D by fixing S, appendix
+                        invCov = gaussian_data.A
+                        u0 = -((np.linalg.inv(gaussian_data.A)) @ gaussian_data.B) @ S
+                        inner = (S @ (gaussian_data.C @ S)) - (u0 @ (gaussian_data.A @ u0.transpose()))
+                        c = gaussian_data.coeff * math.exp(-0.5 * inner)
+                        
+                        # Calculate resulting gaussian by multiplying Gp * Gi
+                        resultInvCov = invCov + footprint_cov_inv
+                        resultCov = np.linalg.inv(resultInvCov)
+                        resultMean = resultCov @ ((invCov @ u0.transpose()) + (footprint_cov_inv @ (footprint_mean - np.matrix([[gaussian_seed[0], gaussian_seed[1]]])).transpose()))
+
+                        # G_p * G_i
+                        resultC = evaluate_gaussian(c, resultMean.transpose(), u0, invCov) * evaluate_gaussian(get_gaussian_coefficient(footprint_cov_inv), resultMean.transpose(), footprint_mean - np.array([gaussian_seed[0], gaussian_seed[1]]), footprint_cov_inv)
+
+                        det = np.linalg.det(resultCov * 2.0 * math.pi)
+
+                        if det > 0.0:
+                            accum += resultC * math.sqrt(det)
+
+            accum /= (mX / float(region_size[0,0]) * 0.8) 
+            accum /= samples_per_pixel
+
+            ndf[y * width + x] = accum    
+
+    cv2.imshow("ndf", ndf)
+    cv2.waitKey(0)
 
 
 
@@ -249,8 +327,8 @@ def convert_normal_map_to_curved_elements(normal_map):
                 return
 def main():
     normal_map = cv2.imread("NormalMap.png") / 255
-    cv2.imshow("NormalMap", normal_map)
-    cv2.waitKey()
+    # cv2.imshow("NormalMap", normal_map)
+    # cv2.waitKey()
     # convert_normal_map_to_flat_elements(normal_map)
     # convert_normal_map_to_curved_elements(normal_map)
     curved_elements_4d_ndf(normal_map, 512, 512)

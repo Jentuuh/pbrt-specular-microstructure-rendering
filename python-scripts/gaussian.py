@@ -40,7 +40,10 @@ class Gaussian:
         return np.linalg.inv(invCov4D)
 
     def evaluate(self, position, normal, invSigmaR2):
-        x_i = np.array([self.position[0], self.position[1], self.normal[0], self.normal[1]])
-        x = np.array([position[0], position[1], normal[0], normal[1]])
-        return self.coeff * math.exp((-0.5) * (x - x_i) @ self.invCovarianceMatrix(invSigmaR2) @ (x - x_i))
+        x_i = np.array([self.position[0], self.position[1], self.normal[0], self.normal[1]]).transpose()
+        x = np.array([position[0], position[1], normal[0], normal[1]]).transpose()
+        
+        inner = (x - x_i) @ self.invCovarianceMatrix(invSigmaR2) @ (x - x_i)
+        return self.coeff * math.exp(-0.5 * inner)
+        # return self.coeff * math.exp((-0.5) * (x - x_i) @ self.invCovarianceMatrix(invSigmaR2) @ (x - x_i))
 
