@@ -4,9 +4,11 @@ import sys
 import math
 from gaussian import Gaussian
 import random
+from threading import Thread
 np.set_printoptions(threshold=sys.maxsize)
 
-h = 1
+IMAGE_SIZE = (32, 32)
+h = 1 / IMAGE_SIZE[0]
 sigma_h = h / math.sqrt(8*math.log(2, 10))
 sigma_r = 0.005
 
@@ -163,11 +165,25 @@ def curved_elements_4d_ndf(normal_map, width, height):
             print("det negative!")
             data.coeff = 0.0
         else:
-            data.coeff = h * (h / math.sqrt(det))
+            data.coeff = h * h / math.sqrt(det)
         
         gaussians.append(data)
 
-    curved_elements_integration(512, 512, mX, mY, gaussians)
+    amount_threads = 16
+    threads = [None] * amount_threads
+    resulting_ndf_img = np.zeros((width, height))
+
+    for j in range(4):
+        for i in range(4):
+            print("starting thread " + str(j * 4 + i) + "...")
+            threads[j * 4 + i] = Thread(target=curved_elements_integration, args=(j * 4 + i, int(height/amount_threads), width, height, mX, mY, gaussians, resulting_ndf_img))
+            threads[j * 4 + i].start()
+
+        for i in range(4):
+            threads[j * 4 + i].join()
+
+    cv2.imwrite("ndf.png", resulting_ndf_img)
+    # curved_elements_integration(width, height, mX, mY, gaussians)
 
     # resulting_img = np.zeros((normal_map.shape[0], normal_map.shape[1]))
     # for x in range(0, normal_map.shape[0]):
@@ -197,11 +213,11 @@ def get_gaussian_coefficient(invCov):
     
     return 0.0
 
-def curved_elements_integration(width, height, mX, mY, gaussians):
-    ndf = np.zeros(width * height)
+def curved_elements_integration(threadNumber, bucketHeight, width, height, mX, mY, gaussians, result_img):
+    # ndf = np.zeros((width, bucketHeight))
 
-    region_center = np.matrix([[256, 256]])
-    region_size = np.matrix([[256, 256]])
+    region_center = np.matrix([[width, height]])
+    region_size = np.matrix([[width, height]])
     origin = region_center - (region_size * 0.5)
 
     footprint_radius = region_size[0, 0] * 0.5 / float(mX)
@@ -214,9 +230,13 @@ def curved_elements_integration(width, height, mX, mY, gaussians):
 
     invW = 1.0 / float(width)
     invH = 1.0 / float(height)
+    
+    fromY = bucketHeight * threadNumber
+    toY = min(height, bucketHeight * (threadNumber + 1))
 
-    for y in range(height):
+    for y in range(fromY, toY):
         for x in range(width):
+            # print("Doing work in thread " + str(threadNumber) + "...")
             accum = 0.0
             s = x * invW
             t = y * invH
@@ -224,7 +244,7 @@ def curved_elements_integration(width, height, mX, mY, gaussians):
             imageS = np.array([(s * 2.0) - 1.0, (t * 2.0) - 1.0])
 
             if math.sqrt(imageS @ imageS) > 0.975:
-                ndf[y * width + x] = 0.0
+                result_img[y, x] = 0.0
                 continue
 
             for sample_nr in range(samples_per_pixel):
@@ -237,7 +257,7 @@ def curved_elements_integration(width, height, mX, mY, gaussians):
                         gaussian_data = gaussians[gaussian_y * mX + gaussian_x]
                         gaussian_seed = np.array([gaussian_data.position[0], gaussian_data.position[1], gaussian_data.normal[0], gaussian_data.normal[1]])
 
-                                        # shift to [-1;1]
+                        # shift to [-1;1] (pertubation from mean normal: S - N(x_i))
                         S = np.array([(s * 2.0) - 1.0, (t * 2.0) - 1.0])
                         S = S - np.array([gaussian_seed[2], gaussian_seed[3]])
 
@@ -263,11 +283,11 @@ def curved_elements_integration(width, height, mX, mY, gaussians):
             accum /= (mX / float(region_size[0,0]) * 0.8) 
             accum /= samples_per_pixel
 
-            ndf[y * width + x] = accum    
+            result_img[y,x] = accum    
 
-    cv2.imshow("ndf", ndf)
-    cv2.waitKey(0)
-
+        print("Done processing row " + str(y))
+    #cv2.imwrite("ndf.png", ndf)
+    #return ndf
 
 
 def convert_normal_map_to_flat_elements(normal_map):
@@ -326,10 +346,10 @@ def convert_normal_map_to_curved_elements(normal_map):
                 cv2.waitKey()
                 return
 def main():
-    normal_map = cv2.imread("NormalMap.png") / 255
+    normal_map = cv2.imread("normal3.png") / 255
     # cv2.imshow("NormalMap", normal_map)
     # cv2.waitKey()
     # convert_normal_map_to_flat_elements(normal_map)
     # convert_normal_map_to_curved_elements(normal_map)
-    curved_elements_4d_ndf(normal_map, 512, 512)
+    curved_elements_4d_ndf(normal_map, IMAGE_SIZE[0], IMAGE_SIZE[1])
 main()
