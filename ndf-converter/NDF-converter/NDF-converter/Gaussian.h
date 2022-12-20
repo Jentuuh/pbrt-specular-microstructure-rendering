@@ -8,6 +8,7 @@ public:
 
 	float evaluate(glm::vec4 x);
 	float evaluate(glm::vec2 x);
+	float evaluateFormula12(glm::vec2 u, glm::vec2 s, float sigmaH2, float sigmaR2);
 
 	glm::vec4 seedPoint; // position u, normal n(u)
 	glm::mat2 A;

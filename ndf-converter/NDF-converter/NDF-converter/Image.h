@@ -6,7 +6,7 @@
 class Image
 {
 public:
-	Image(std::string filename); // Image from file
+	Image(std::string filename, int imageChannels); // Image from file
 	Image(int width, int height); // Empty image
 
 	char* getPixel(int x, int y);

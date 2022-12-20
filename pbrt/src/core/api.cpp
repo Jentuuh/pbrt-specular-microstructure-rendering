@@ -74,6 +74,7 @@
 #include "materials/kdsubsurface.h"
 #include "materials/matte.h"
 #include "materials/metal.h"
+#include "materials/glitter.h"
 #include "materials/mirror.h"
 #include "materials/mixmat.h"
 #include "materials/plastic.h"
@@ -576,6 +577,8 @@ std::shared_ptr<Material> MakeMaterial(const std::string &name,
         material = CreateMixMaterial(mp, mat1, mat2);
     } else if (name == "metal")
         material = CreateMetalMaterial(mp);
+    else if (name == "glitter")
+        material = CreateGlitterMaterial(mp);
     else if (name == "substrate")
         material = CreateSubstrateMaterial(mp);
     else if (name == "uber")

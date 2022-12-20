@@ -8,13 +8,13 @@
 
 #include <iostream>
 
-Image::Image(std::string filename)
+Image::Image(std::string filename, int imageChannels)
 {
 	int normalWidth;
 	int normalHeight;
 	int numChannels;
 
-	unsigned char* normalMap = stbi_load("../Data/normal3.png", &normalWidth, &normalHeight, &numChannels, 3);
+	unsigned char* normalMap = stbi_load(filename.c_str(), &normalWidth, &normalHeight, &numChannels, imageChannels);
 	this->pixels = std::vector<char>(normalMap, normalMap + normalWidth * normalHeight * numChannels);
 	this->width = normalWidth;
 	this->height = normalHeight;
@@ -37,18 +37,18 @@ char* Image::getPixel(int x, int y)
 {
 	char pixel[3];
 
-	pixel[0] = pixels[(x * width + y) * this->numChannels];
-	pixel[1] = pixels[(x * width + y) * this->numChannels + 1];
-	pixel[2] = pixels[(x * width + y) * this->numChannels + 2];
+	pixel[0] = pixels[(y * width + x) * this->numChannels];
+	pixel[1] = pixels[(y * width + x) * this->numChannels + 1];
+	pixel[2] = pixels[(y * width + x) * this->numChannels + 2];
 
 	return pixel;
 }
 
 void Image::writePixel(int x, int y, char rgb[3])
 {
-	this->pixels[(x * width + y) * this->numChannels] = rgb[0];
-	this->pixels[(x * width + y) * this->numChannels + 1] = rgb[1];
-	this->pixels[(x * width + y) * this->numChannels + 2] = rgb[2];
+	this->pixels[(y * width + x) * this->numChannels] = rgb[0];
+	this->pixels[(y * width + x) * this->numChannels + 1] = rgb[1];
+	this->pixels[(y * width + x) * this->numChannels + 2] = rgb[2];
 }
 
 

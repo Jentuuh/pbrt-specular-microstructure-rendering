@@ -1,0 +1,5 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindDoxygen.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindPackageMessage.cmake
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/src/ext/ptex/src/doc/CMakeLists.txt

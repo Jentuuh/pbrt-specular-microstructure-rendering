@@ -16,6 +16,8 @@ Integrator "path"
 
 WorldBegin
 
+Texture "scratchNormalMap" "float" "imagemap" "string filename" [ "../textures/scratches.png" ] "bool trilinear" [ "true" ]
+
 AttributeBegin
 Material "matte" "color Kd" [0 0 0]
 Translate 150 0  20

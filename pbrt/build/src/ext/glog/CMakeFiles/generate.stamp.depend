@@ -1,0 +1,40 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.24/Modules/BasicConfigVersion-SameMajorVersion.cmake.in
+C:/Program Files/CMake/share/cmake-3.24/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CMakeConfigurableFile.in
+C:/Program Files/CMake/share/cmake-3.24/Modules/CMakePackageConfigHelpers.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CPack.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CPackComponent.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckCSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckCXXCompilerFlag.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckCXXSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckFunctionExists.c
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckFunctionExists.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckIncludeFile.c.in
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckIncludeFile.cxx.in
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckIncludeFileCXX.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckLibraryExists.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckStructHasMember.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckSymbolExists.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckTypeSize.c.in
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckTypeSize.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindThreads.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/Internal/CheckCompilerFlag.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/Internal/CheckFlagCommonConfig.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/Internal/CheckSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/WriteBasicConfigVersionFile.cmake
+C:/Program Files/CMake/share/cmake-3.24/Templates/CPackConfig.cmake.in
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/build/CMakeFiles/CheckTypeSize/HAVE_UINT16_T.c
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/build/CMakeFiles/CheckTypeSize/HAVE_U_INT16_T.c
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/build/CMakeFiles/CheckTypeSize/HAVE___UINT16.c
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/src/ext/glog/CMakeLists.txt
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/src/ext/glog/cmake/DetermineGflagsNamespace.cmake
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/src/ext/glog/glog-config.cmake.in
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/src/ext/glog/src/config.h.cmake.in
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/src/ext/glog/src/glog/logging.h.in
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/src/ext/glog/src/glog/raw_logging.h.in
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/src/ext/glog/src/glog/stl_logging.h.in
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/src/ext/glog/src/glog/vlog_is_on.h.in

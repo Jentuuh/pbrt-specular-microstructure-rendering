@@ -1,0 +1,5 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.24/Modules/CPack.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CPackComponent.cmake
+C:/Program Files/CMake/share/cmake-3.24/Templates/CPackConfig.cmake.in
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/src/ext/openexr/IlmBase/CMakeLists.txt

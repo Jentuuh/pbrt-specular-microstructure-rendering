@@ -17,6 +17,6 @@ int main()
     }
     test.saveImage("../Data/test1.png");*/
     NormalToNDFConverter converter;
-    converter.generate4DNDF(256, 256, 0.005f);
+    converter.generate4DNDF(522, 522, 0.005f);
 }
 

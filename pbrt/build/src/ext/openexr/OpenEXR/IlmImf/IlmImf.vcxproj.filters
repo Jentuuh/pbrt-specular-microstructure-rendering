@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\openexr\OpenEXR\IlmImf\ImfB44Compressor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\openexr\OpenEXR\IlmImf\ImfDwaCompressor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\CMakeFiles\d5d4c815dca3c1f72e9bcbfab84f0587\b44ExpLogTable.h.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\CMakeFiles\d5d4c815dca3c1f72e9bcbfab84f0587\dwaLookups.h.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\openexr\OpenEXR\IlmImf\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfBoxAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfCRgbaFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfChannelList.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfChannelListAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfFloatAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfFrameBuffer.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfHeader.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfIO.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfInputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfIntAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfLineOrderAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfMatrixAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfOpaqueAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfOutputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfRgbaFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfStringAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfVecAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfHuf.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfThreading.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfWav.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfLut.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfCompressor.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfRleCompressor.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfZipCompressor.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfPizCompressor.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfMisc.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfCompressionAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfDoubleAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfConvert.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfPreviewImage.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfPreviewImageAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfVersion.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfChromaticities.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfChromaticitiesAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfKeyCode.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfKeyCodeAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfTimeCode.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfTimeCodeAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfRational.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfRationalAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfFramesPerSecond.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfStandardAttributes.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfStdIO.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfEnvmap.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfEnvmapAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfScanLineInputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfTiledInputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfTiledMisc.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfTiledOutputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfTiledRgbaFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfTileDescriptionAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfTileOffsets.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfRgbaYca.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfPxr24Compressor.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfTestFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfStringVectorAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfMultiView.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfAcesFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfMultiPartOutputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfGenericOutputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfOutputPartData.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfMultiPartInputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfGenericInputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfPartType.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfInputPartData.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfOutputPart.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfTiledOutputPart.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfInputPart.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfTiledInputPart.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfDeepScanLineInputPart.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfDeepScanLineOutputPart.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfDeepScanLineInputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfDeepScanLineOutputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfDeepTiledInputPart.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfDeepTiledOutputPart.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfDeepTiledInputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfDeepTiledOutputFile.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfDeepFrameBuffer.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfDeepCompositing.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfCompositeDeepScanLine.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfDeepImageStateAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfFastHuf.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfFloatVectorAttribute.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfRle.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfSystemSpecific.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+    <Object Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\IlmImf\IlmImf-obj.dir\$(Configuration)\ImfZip.obj">
+      <Filter>Object Libraries</Filter>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{1531035F-74C2-3EFD-B206-178300846B90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object Libraries">
+      <UniqueIdentifier>{ADE44F7B-B944-32C3-B299-67829B660178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{77CD8E64-799B-3B83-A68C-E3E64069120C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

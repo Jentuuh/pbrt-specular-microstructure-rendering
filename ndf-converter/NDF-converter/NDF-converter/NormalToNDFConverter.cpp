@@ -1,13 +1,33 @@
 #include "NormalToNDFConverter.h"
+#include <pcg32.h>
 #include <glm/gtc/constants.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <iostream>
+#include <thread>
 
 
 
 NormalToNDFConverter::NormalToNDFConverter()
 {
 
+}
+
+inline
+float EvaluateGaussian(float c, const glm::vec2& x, const glm::vec2& u, const glm::mat2& InvCov)
+{
+	float inner = glm::dot(x - u, InvCov * (x - u));
+	return c * glm::exp(-.5f * inner);
+}
+
+inline
+float GetGaussianCoefficient(const glm::mat2& InvCov)
+{
+	float det = glm::determinant(2.f * glm::pi<float>() * glm::inverse(InvCov));
+
+	if (det > 0.f)
+		return 1.f / glm::sqrt(det);
+
+	return 0.f;
 }
 
 glm::vec2 NormalToNDFConverter::sampleRawNormal(Image& normalMap, int x, int y)
@@ -89,15 +109,106 @@ glm::mat2 NormalToNDFConverter::sampleNormalMapJacobian(Image& normalMap, glm::v
 void NormalToNDFConverter::generate4DNDF(int width, int height, float sigmaR)
 {
 	// Load normal map image from file
-	Image normalMap = Image{ "../Data/normal3.png" };
+	Image normalMap = Image{ "../Data/normal4.png", 3 };
 	Image ndfImage = Image{ width, height };
 
 	// Convert normal map to mixture of Gaussians landscape
 	curvedElements4DNDF(ndfImage, normalMap, width, height, sigmaR);
 
 	// Save P-NDF image
-	ndfImage.saveImage("../Output/ndf.png");
+	//ndfImage.saveImage("../Output/ndf.png");
 }
+
+void integrateCurvedElements(int threadNumber, int chunkHeight, int width, int height, int mX, int mY, std::vector<Gaussian> gaussians, float* ndf)
+{
+	glm::vec2 regionCenter = glm::vec2{ 50, 50 };
+	glm::vec2 regionSize = glm::vec2{ 16, 16 };
+	glm::vec2 from = regionCenter - regionSize * 0.5f;
+
+	float footprintRadius = regionSize.x * 0.5f / (float)mX;
+	float sigmaP = footprintRadius * 0.5f;
+
+	glm::mat2 footprintCovarianceInv = glm::inverse(glm::mat2(sigmaP * sigmaP));
+	glm::vec2 footprintMean = (from + regionSize * .5f) * glm::vec2(1.f / mX, 1.f / mY);
+
+	pcg32 generator;
+	generator.seed(14041956 + threadNumber * 127361);
+
+	int samplesPerPixel = 8;
+
+	int fromY = chunkHeight * threadNumber;
+	int toY = glm::min(chunkHeight * (threadNumber + 1), height);
+
+	float invW = 1.f / (float)width;
+	float invH = 1.f / (float)height;
+
+	for (int y = fromY; y < toY; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			float accum = 0.f;
+			float s = x * invW;
+			float t = y * invH;
+
+			// Shift s,t between [-1;1]
+			glm::vec2 imageS = glm::vec2((s * 2.f) - 1.f, (t * 2.f) - 1.f);
+
+			// Projection outside the disk
+			if (glm::length(imageS) > .975f)
+			{
+				ndf[y * width + x] = 0.f;
+				continue;
+			}
+
+			for (int sample = 0; sample < samplesPerPixel; sample++)
+			{
+				s = (x + generator.nextFloat()) * invW;
+				t = (y + generator.nextFloat()) * invH;
+
+
+				// For each gaussian in the region...
+				for (int gX = from.x; gX < regionSize.x + from.x; gX++)
+				{
+					for (int gY = from.y; gY < regionSize.y + from.y; gY++)
+					{
+						Gaussian data = gaussians[gY * mX + gX];
+						glm::vec4 gaussianSeed = data.seedPoint;
+
+						// Difference in direction between seedpoint and sample, S - N(u_i)
+						glm::vec2 S((s * 2.f) - 1.f, (t * 2.f) - 1.f);
+						S = S - glm::vec2(gaussianSeed.z, gaussianSeed.w);
+
+						// We reduce the 4D gaussian into 2D by fixing S, see appendix formula 18
+						glm::mat2 invCov = data.A;
+						glm::vec2 u0 = -((glm::inverse(data.A)) * data.B) * S;
+						float inner = glm::dot(S, data.C * S) - glm::dot(u0, data.A * u0);
+						float c = data.coeff * glm::exp(-0.5f * inner);
+
+						// Calculate the resulting gaussian by multiplying Gp * Gi
+						glm::mat2 resultInvCovariance = invCov + footprintCovarianceInv;
+						glm::mat2 resultCovariance = glm::inverse(resultInvCovariance);
+						glm::vec2 resultMean = resultCovariance * (invCov * u0 + footprintCovarianceInv * (footprintMean - glm::vec2(gaussianSeed.x, gaussianSeed.y)));
+
+						float resultC = EvaluateGaussian(c, resultMean, u0, invCov) *
+							EvaluateGaussian(GetGaussianCoefficient(footprintCovarianceInv), resultMean, footprintMean - glm::vec2(gaussianSeed.x, gaussianSeed.y), footprintCovarianceInv);
+
+						float det = (glm::determinant(resultCovariance * 2.f * glm::pi<float>()));
+
+						if (det > 0.f)
+							accum += resultC * glm::sqrt(det);
+					}
+				}
+			}
+			// Monte carlo integration
+			accum /= (mX / (float)regionSize.x) * .8f;
+			accum /= samplesPerPixel;
+
+			ndf[y * width + x] = accum;
+		}
+		std::cout << "Processed row " << y << "..." << std::endl;
+	}
+}
+
 
 void NormalToNDFConverter::curvedElements4DNDF(Image& ndfImage, Image& normalMap, int width, int height, float sigmaR)
 {
@@ -180,23 +291,52 @@ void NormalToNDFConverter::curvedElements4DNDF(Image& ndfImage, Image& normalMap
 		gaussians.push_back(newGaussian);
 	}
 
-	// TODO: implement formula 12,13 to test instead of current evaluate
-	Image testResult = { width, height };
-	for (int x = 0; x < width; x++)
-	{
-		for (int y = 0; y < height; y++)
-		{
-			glm::vec2 uv = { float(x) / float(width), float(y) / float(height) };
-			char* normal = normalMap.getPixel(x, y);
-			glm::vec3 normalVec3 = { int(normal[0]) / 255.0f, int(normal[1]) / 255.0f, int(normal[2]) / 255.0f };
-			glm::vec2 st = { normalVec3.x, normalVec3.z };
-			glm::vec4 pixelEvaluation = { uv.x, uv.y, st.x, st.y };
+	int threadCount = 16;
+	std::vector<std::thread> threads;
+	int chunkHeight = height / threadCount;
 
-			float response = gaussians[32896].evaluate(pixelEvaluation);
-			char responseColor[3] = { response * 255.0f, response * 255.0f, response * 255.0f };
-			testResult.writePixel(x, y, responseColor);
+	// Shared output buffer
+	float* ndf = new float[width * height];
+
+	// Start threads
+	for (int i = 0; i < threadCount; i++)
+	{
+		threads.push_back(std::thread{ integrateCurvedElements, i, chunkHeight, width, height, mX, mY, gaussians, ndf});
+	}
+
+	// Join threads
+	for (int i = 0; i < threadCount; i++)
+	{
+		threads[i].join();
+	}
+
+	// Write output to image
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			float normal = ndf[y * width + x];
+			char color[3] = { glm::clamp(normal * 255.0f, 0.0f, 255.0f), glm::clamp(normal * 255.0f, 0.0f, 255.0f), glm::clamp(normal * 255.0f, 0.0f, 255.0f) };
+			ndfImage.writePixel(x, y, color);
 		}
 	}
-	testResult.saveImage("../Data/testResult.png");
 
+	ndfImage.saveImage("../Output/ndfImage.png");
+
+	//Image testResult = { width, height };
+	//for (int y = 0; y < width; y++)
+	//{
+	//	for (int x = 0; x < height; x++)
+	//	{
+	//		glm::vec2 uv = { float(x) / float(width), float(y) / float(height) };
+	//		glm::vec2 st = sampleNormalMap(normalMap, uv);
+	//		glm::vec4 pixelEvaluation = { uv.x, uv.y, st.x, st.y };
+
+	//		float response = gaussians[131150].evaluateFormula12(uv, st, sigmaH2, sigmaR2);
+	//		char responseColor[3] = { response * 255.0f, response * 255.0f, response * 255.0f };
+	//		testResult.writePixel(x, y, responseColor);
+	//	}
+	//}
+	//testResult.saveImage("../Data/testResult.png");
+	delete[] ndf;
 }

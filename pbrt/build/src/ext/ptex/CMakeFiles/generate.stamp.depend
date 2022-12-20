@@ -1,0 +1,14 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.24/Modules/CTest.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CTestTargets.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CTestUseLaunchers.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckCSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckIncludeFile.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckLibraryExists.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/DartConfiguration.tcl.in
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindThreads.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindZLIB.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/GNUInstallDirs.cmake
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/src/ext/ptex/CMakeLists.txt

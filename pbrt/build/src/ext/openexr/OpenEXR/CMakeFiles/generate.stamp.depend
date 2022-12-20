@@ -1,0 +1,9 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.24/Modules/CPack.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CPackComponent.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/CheckCXXSourceCompiles.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.24/Modules/FindZLIB.cmake
+C:/Program Files/CMake/share/cmake-3.24/Templates/CPackConfig.cmake.in
+C:/Users/jente/Desktop/University/pbrt-project/pbrt-specular-microstructure-rendering/pbrt/src/ext/openexr/OpenEXR/CMakeLists.txt
