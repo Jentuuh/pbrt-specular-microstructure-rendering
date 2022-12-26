@@ -111,7 +111,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\zlib;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\zlib;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\openexr\IlmBase\Imath;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\openexr\IlmBase\Half;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\openexr\IlmBase\Iex;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\openexr\OpenEXR\IlmImf;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\IlmBase\config;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\config;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\glog\src;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\glog;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\ptex\src\ptex;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\zlib;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\zlib;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\openexr\IlmBase\Imath;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\openexr\IlmBase\Half;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\openexr\IlmBase\Iex;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\openexr\OpenEXR\IlmImf;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\IlmBase\config;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\openexr\OpenEXR\config;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\glog\src;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\build\src\ext\glog;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\ptex\src\ptex;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\core;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\stb;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\pcg32;C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\ext\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -266,6 +266,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\materials\glitter.cpp" />
+    <ClCompile Include="..\src\ndf-generation\GaussianData.cpp" />
+    <ClCompile Include="..\src\ndf-generation\Image.cpp" />
+    <ClCompile Include="..\src\ndf-generation\NormalToNDFConverter.cpp" />
     <ClCompile Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\core\api.cpp" />
     <ClCompile Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\core\bssrdf.cpp" />
     <ClCompile Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\core\camera.cpp" />
@@ -304,6 +307,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\core\texture.cpp" />
     <ClCompile Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\core\transform.cpp" />
     <ClInclude Include="..\src\materials\glitter.h" />
+    <ClInclude Include="..\src\ndf-generation\GaussianData.h" />
+    <ClInclude Include="..\src\ndf-generation\Image.h" />
+    <ClInclude Include="..\src\ndf-generation\NormalToNDFConverter.h" />
     <ClInclude Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\core\api.h" />
     <ClInclude Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\core\bssrdf.h" />
     <ClInclude Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\core\camera.h" />

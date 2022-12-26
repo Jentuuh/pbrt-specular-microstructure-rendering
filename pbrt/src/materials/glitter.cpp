@@ -20,7 +20,12 @@ namespace pbrt {
         uRoughness(uRoughness),
         vRoughness(vRoughness),
         bumpMap(bumpMap),
-        remapRoughness(remapRoughness) {}
+        remapRoughness(remapRoughness) {
+    
+        Image normalMapImage = {"../../textures/scratches.png", 3};
+        this->converter =
+            std::make_shared<NormalToNDFConverter>(normalMapImage);
+    }
 
    
 
@@ -44,7 +49,7 @@ namespace pbrt {
         Fresnel* frMf = ARENA_ALLOC(arena, FresnelConductor)(1., eta->Evaluate(*si),
             k->Evaluate(*si));
         MicrofacetDistribution* distrib =
-            ARENA_ALLOC(arena, TrowbridgeReitzDistribution)(uRough, vRough);
+            ARENA_ALLOC(arena, GlitterDistribution)(uRough, vRough, si->uv, this->converter);
         si->bsdf->Add(ARENA_ALLOC(arena, MicrofacetReflection)(1., distrib, frMf));
     }
 

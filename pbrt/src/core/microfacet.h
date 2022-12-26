@@ -41,6 +41,8 @@
 // core/microfacet.h*
 #include "pbrt.h"
 #include "geometry.h"
+#include "ndf-generation/Image.h"
+#include "ndf-generation/NormalToNDFConverter.h"
 
 namespace pbrt {
 
@@ -76,6 +78,34 @@ inline std::ostream &operator<<(std::ostream &os,
     os << md.ToString();
     return os;
 }
+
+// Yan et al. (2016)
+class GlitterDistribution : public MicrofacetDistribution {
+  public:
+    // GlitterDistribution Public Methods
+    static inline Float RoughnessToAlpha(Float roughness);
+    GlitterDistribution(Float alphax, Float alphay, Point2f uv, std::shared_ptr<NormalToNDFConverter> converter,
+                                bool samplevis = true)
+        : MicrofacetDistribution(samplevis),
+          alphax(std::max(Float(0.001), alphax)),
+          alphay(std::max(Float(0.001), alphay)),
+          texCoords(uv),
+          converter{converter} {}
+    Float D(const Vector3f &wh) const;
+    Vector3f Sample_wh(const Vector3f &wo, const Point2f &u) const;
+    std::string ToString() const;
+
+  private:
+    std::shared_ptr<NormalToNDFConverter> converter;
+    Point2f texCoords;
+
+    // GlitterDistribution Private Methods
+    Float Lambda(const Vector3f &w) const;
+
+    // GlitterDistribution Private Data
+    const Float alphax, alphay;
+};
+
 
 class BeckmannDistribution : public MicrofacetDistribution {
   public:
@@ -125,6 +155,14 @@ class TrowbridgeReitzDistribution : public MicrofacetDistribution {
 
 // MicrofacetDistribution Inline Methods
 inline Float TrowbridgeReitzDistribution::RoughnessToAlpha(Float roughness) {
+    roughness = std::max(roughness, (Float)1e-3);
+    Float x = std::log(roughness);
+    return 1.62142f + 0.819955f * x + 0.1734f * x * x + 0.0171201f * x * x * x +
+           0.000640711f * x * x * x * x;
+}
+
+// MicrofacetDistribution Inline Methods
+inline Float GlitterDistribution::RoughnessToAlpha(Float roughness) {
     roughness = std::max(roughness, (Float)1e-3);
     Float x = std::log(roughness);
     return 1.62142f + 0.819955f * x + 0.1734f * x * x + 0.0171201f * x * x * x +

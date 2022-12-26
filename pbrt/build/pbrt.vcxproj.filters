@@ -346,6 +346,15 @@
     <ClCompile Include="..\src\materials\glitter.cpp">
       <Filter>materials</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ndf-generation\GaussianData.cpp">
+      <Filter>ndf-generation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ndf-generation\Image.cpp">
+      <Filter>ndf-generation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ndf-generation\NormalToNDFConverter.cpp">
+      <Filter>ndf-generation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\src\core\api.h">
@@ -711,6 +720,15 @@
     <ClInclude Include="..\src\materials\glitter.h">
       <Filter>materials</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\ndf-generation\GaussianData.h">
+      <Filter>ndf-generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ndf-generation\Image.h">
+      <Filter>ndf-generation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ndf-generation\NormalToNDFConverter.h">
+      <Filter>ndf-generation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\jente\Desktop\University\pbrt-project\pbrt-specular-microstructure-rendering\pbrt\CMakeLists.txt" />
@@ -765,6 +783,9 @@
     </Filter>
     <Filter Include="textures">
       <UniqueIdentifier>{ADB64847-793A-3181-BE60-ECB71F70A717}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ndf-generation">
+      <UniqueIdentifier>{09d20abd-d83b-4144-a436-e7f2513b3385}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

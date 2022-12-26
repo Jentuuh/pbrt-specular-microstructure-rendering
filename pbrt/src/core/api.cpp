@@ -843,8 +843,8 @@ std::unique_ptr<Filter> MakeFilter(const std::string &name,
     Filter *filter = nullptr;
     if (name == "box")
         filter = CreateBoxFilter(paramSet);
-    else if (name == "gaussian")
-        filter = CreateGaussianFilter(paramSet);
+    //else if (name == "gaussian")
+    //    filter = CreateGaussianFilter(paramSet);
     else if (name == "mitchell")
         filter = CreateMitchellFilter(paramSet);
     else if (name == "sinc")

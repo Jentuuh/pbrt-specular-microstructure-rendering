@@ -9,6 +9,7 @@
 #include "pbrt.h"
 #include "material.h"
 #include "spectrum.h"
+#include "ndf-generation/NormalToNDFConverter.h"
 
 namespace pbrt {
     class GlitterMaterial : public Material
@@ -27,6 +28,7 @@ namespace pbrt {
             bool allowMultipleLobes) const;
 
     private:
+        std::shared_ptr<NormalToNDFConverter> converter;
         std::shared_ptr<Texture<Spectrum>> eta, k;
         std::shared_ptr<Texture<Float>> roughness, uRoughness, vRoughness;
         std::shared_ptr<Texture<Float>> bumpMap;
