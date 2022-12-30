@@ -38,7 +38,8 @@ glm::vec2 NormalToNDFConverter::sampleRawNormal(Image& normalMap, int x, int y)
 	x = glm::clamp(x, 0, w - 1);
 	y = glm::clamp(y, 0, h - 1);
 
-	char* color = normalMap.getPixel(x, y);
+	int* color;
+	normalMap.getPixel(x, y, color);
 	return glm::vec2(color[0] / 255.0f, color[1] / 255.0f) * 2.0f - glm::vec2(1.0f);
 }
 

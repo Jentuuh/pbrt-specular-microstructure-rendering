@@ -233,16 +233,36 @@ static Vector3f TrowbridgeReitzSample(const Vector3f &wi, Float alpha_x,
 
 
 Float GlitterDistribution::D(const Vector3f &wh) const {
-    glm::vec2 halfVectorProjectedOntoDisk = {wh.x, wh.z};
-    return converter->evaluatePNDF(glm::vec2{texCoords.x, texCoords.y},
-                            halfVectorProjectedOntoDisk,
-                            0.005f);
+    glm::vec3 tangent;
+    glm::vec3 normal = glm::vec3{shadingNormal.x, shadingNormal.y, shadingNormal.z};
+
+    if (shadingNormal.x != 0 && shadingNormal.y != 0 && shadingNormal.z != 1)
+    {
+       tangent = glm::cross(normal,
+            glm::vec3{0, 0, 1});
+    } else {
+       tangent = glm::cross(normal,
+           glm::vec3{1, 0, 0});
+    }
+
+    glm::vec3 thirdBasisAxis = glm::cross(normal, tangent);
+    glm::vec3 localWh = converter->changeBasisTo(glm::vec3{wh.x, wh.y, wh.z}, tangent, thirdBasisAxis, normal);
+    glm::vec2 halfVectorProjectedOntoDisk = {localWh.x, localWh.y};
+    //std::cout << glm::length(halfVectorProjectedOntoDisk) << std::endl;
+
+    float ndfEvaluation = converter->evaluatePNDF(glm::vec2{texCoords.x, texCoords.y},
+                        halfVectorProjectedOntoDisk, 0.005f, pndfRegionSize);
+    //std::cout << ndfEvaluation << std::endl;
+    return ndfEvaluation;
 }
 
 Vector3f GlitterDistribution::Sample_wh(const Vector3f &wo,
                                                 const Point2f &u) const {
-    // Same as Trowbridge-Reitz for now
-    Vector3f wh;
+        glm::vec3 new_wh =
+            converter->sampleWh(glm::vec2{texCoords.x, texCoords.y}, 24);
+        return Vector3f{new_wh.x, new_wh.y, new_wh.z};
+  
+ /*
     if (!sampleVisibleArea) {
         Float cosTheta = 0, phi = (2 * Pi) * u[1];
         if (alphax == alphay) {
@@ -268,7 +288,7 @@ Vector3f GlitterDistribution::Sample_wh(const Vector3f &wo,
         wh = TrowbridgeReitzSample(flip ? -wo : wo, alphax, alphay, u[0], u[1]);
         if (flip) wh = -wh;
     }
-    return wh;
+    return wh;*/
 }
 
 Float BeckmannDistribution::Lambda(const Vector3f &w) const {
@@ -390,6 +410,10 @@ Vector3f TrowbridgeReitzDistribution::Sample_wh(const Vector3f &wo,
         if (flip) wh = -wh;
     }
     return wh;
+}
+
+Float GlitterDistribution::Pdf(const Vector3f& wo, const Vector3f& wh) const {
+    return D(wh);
 }
 
 Float MicrofacetDistribution::Pdf(const Vector3f &wo,

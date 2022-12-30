@@ -119,8 +119,16 @@ Spectrum PathIntegrator::Li(const RayDifferential &r, const Scene &scene,
         if (isect.bsdf->NumComponents(BxDFType(BSDF_ALL & ~BSDF_SPECULAR)) >
             0) {
             ++totalPaths;
-            Spectrum Ld = beta * UniformSampleOneLight(isect, scene, arena,
-                                                       sampler, false, distrib);
+            Spectrum directLightSampled = UniformSampleOneLight(
+                isect, scene, arena, sampler, false, distrib);
+            if ((beta * directLightSampled).HasNaNs()) {
+                std::cout << "beta: " << beta.ToString() << std::endl;
+                std::cout << "directlightsampled: " << directLightSampled << std::endl;
+                std::cout << "product: " << (beta * directLightSampled).ToString()
+                          << std::endl;
+            }
+            Spectrum Ld = beta * directLightSampled;
+
             VLOG(2) << "Sampled direct lighting Ld = " << Ld;
             if (Ld.IsBlack()) ++zeroRadiancePaths;
             CHECK_GE(Ld.y(), 0.f);
@@ -133,9 +141,14 @@ Spectrum PathIntegrator::Li(const RayDifferential &r, const Scene &scene,
         BxDFType flags;
         Spectrum f = isect.bsdf->Sample_f(wo, &wi, sampler.Get2D(), &pdf,
                                           BSDF_ALL, &flags);
+  /*      if (pdf < 0.01f) {
+            std::cout << pdf << std::endl;
+        }*/
+
         VLOG(2) << "Sampled BSDF, f = " << f << ", pdf = " << pdf;
-        if (f.IsBlack() || pdf == 0.f) break;
+        if (f.IsBlack() || pdf <= 0.0001f) break;
         beta *= f * AbsDot(wi, isect.shading.n) / pdf;
+
         VLOG(2) << "Updated beta = " << beta;
         CHECK_GE(beta.y(), 0.f);
         DCHECK(!std::isinf(beta.y()));

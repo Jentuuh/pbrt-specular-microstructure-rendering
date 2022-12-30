@@ -9,7 +9,7 @@ public:
 	Image(std::string filename, int imageChannels); // Image from file
 	Image(int width, int height); // Empty image
 
-	char* getPixel(int x, int y);
+	int* getPixel(int x, int y, int* pixel);
 	void writePixel(int x, int y, char rgb[3]);
 
 	void saveImage(std::string fileName);

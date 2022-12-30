@@ -41,7 +41,8 @@ Rotate -60 0 0 1
         "float roughness" [.025]
 Translate 100 200 -140
     Include "geometry/killeroo.pbrt"
-    Material "glitter" "rgb eta" [ .9 .9 .9 ] "rgb k"  [ .9 .0 .0 ]
+    Material "glitter" "rgb eta" [ .5 .5 .5 ] "rgb k"  [ .0 .9 .0 ]
+    Material "metal" "rgb eta" [ .0 .9 .0 ] "rgb k"  [ .0 .9 .0 ]
         "float roughness" [.15] 
 Translate -200 0 0
     Include "geometry/killeroo.pbrt"

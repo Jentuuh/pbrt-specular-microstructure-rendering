@@ -4,16 +4,22 @@
 #include <glm/gtx/string_cast.hpp>
 #include <iostream>
 #include <thread>
+#include <random>
 
 
 
 NormalToNDFConverter::NormalToNDFConverter(Image normalMap) : normalMap{normalMap} {
-    generateGaussianCurvedElements(0.005f);
+    generateGaussianCurvedElements(0.0065f);
 }
 
 inline
 float EvaluateGaussian(float c, const glm::vec2& x, const glm::vec2& u, const glm::mat2& InvCov)
 {
+ //   std::cout << "vec2 x: " << x.x << "," << x.y << "vec2 u: " << u.x << ","
+ //             << u.y << std::endl; 
+	//std::cout << glm::dot(x - u, InvCov * (x - u)) << std::endl; 
+	//std::cout << "Coefficient: " << c << std::endl; 
+
 	float inner = glm::dot(x - u, InvCov * (x - u));
 	return c * glm::exp(-.5f * inner);
 }
@@ -29,6 +35,11 @@ float GetGaussianCoefficient(const glm::mat2& InvCov)
 	return 0.f;
 }
 
+glm::vec3 NormalToNDFConverter::changeBasisTo(glm::vec3 in, glm::vec3 X,
+                                            glm::vec3 Y, glm::vec3 Z) {
+        return glm::vec3{glm::dot(in, X), glm::dot(in, Y), glm::dot(in, Z)};
+}
+
 glm::vec2 NormalToNDFConverter::sampleRawNormal(Image& normalMap, int x, int y)
 {
 	int w = normalMap.width;
@@ -37,8 +48,11 @@ glm::vec2 NormalToNDFConverter::sampleRawNormal(Image& normalMap, int x, int y)
 	x = glm::clamp(x, 0, w - 1);
 	y = glm::clamp(y, 0, h - 1);
 
-	char* color = normalMap.getPixel(x, y);
-	return glm::vec2(color[0] / 255.0f, color[1] / 255.0f) * 2.0f - glm::vec2(1.0f);
+    int color[3];
+    normalMap.getPixel(x, y, color);
+	
+	// Normals are between [-1; 1] in both dimensions (projected onto unit disk)
+	return glm::vec2(float(color[0]) / 255.0f, float(color[1]) / 255.0f) * 2.0f - glm::vec2(1.0f);
 }
 
 
@@ -52,7 +66,7 @@ glm::vec2 NormalToNDFConverter::sampleNormalMap(Image& normalMap, glm::vec2 uv)
 	int x = uv.x * w;
 	int y = uv.y * h;
 
-	// Positioning of point relative to discrete pixels, needed for interpolation
+	// Fractional positioning of point relative to discrete pixels, needed for interpolation
 	glm::vec2 st = glm::vec2((uv.x * w) - x, (uv.y * h) - y);
 
 	glm::vec2 p1 = sampleRawNormal(normalMap, x, y);
@@ -104,29 +118,30 @@ glm::mat2 NormalToNDFConverter::sampleNormalMapJacobian(Image& normalMap, glm::v
 	return J;
 }
 
-float NormalToNDFConverter::evaluatePNDF(glm::vec2 U, glm::vec2 st, float sigmaR) 
-{
+float NormalToNDFConverter::evaluatePNDF(glm::vec2 U, glm::vec2 st,
+                                         float sigmaR, int regionSize) {
         try {
 			int mX = normalMap.width;
 			int mY = normalMap.height;
 
-			glm::vec2 regionCenter = U;
-			glm::vec2 regionSize = glm::vec2(12, 12);
-			glm::vec2 from = glm::clamp(regionCenter - regionSize * .5f,
-										glm::vec2(), glm::vec2(mX - 1, mY - 1));
-			glm::vec2 to = glm::clamp(regionCenter + regionSize * .5f, glm::vec2(),
-									  glm::vec2(mX - 1, mY - 1));
+			glm::vec2 regionCenter = glm::vec2{
+                            U.x * float(mX), U.y * float(mY)};
+			glm::vec2 regionSizeVec = glm::vec2(regionSize, regionSize);
+            glm::vec2 from = glm::clamp(regionCenter - regionSizeVec * .5f, glm::vec2(), glm::vec2(mX - 1, mY - 1));
+            glm::vec2 to = glm::clamp(regionCenter + regionSizeVec * .5f, glm::vec2(), glm::vec2(mX - 1, mY - 1));
 
-			float footprintRadius = regionSize.x * .5f / (float)mX;
+			float footprintRadius = regionSizeVec.x * .5f / (float)mX;
 			float sigmaP = footprintRadius * 0.0625f;
 
 			glm::mat2 footprintCovarianceInv =
 				glm::inverse(glm::mat2(sigmaP * sigmaP));
-			glm::vec2 footprintMean =
-				(from + regionSize * .5f) * glm::vec2(1.f / mX, 1.f / mY);
+			glm::vec2 footprintMean = (from + regionSizeVec * .5f) *
+                                                  glm::vec2(1.f / mX, 1.f / mY);
 
 			// Samples that fall outside of the P-NDF disk
-			if (glm::length(st) > .975f) return 0.f;
+            if (glm::length(st) > .975f) {
+                return 0.f;
+            }
 
 			float accum = 0.f;
 		
@@ -139,14 +154,14 @@ float NormalToNDFConverter::evaluatePNDF(glm::vec2 U, glm::vec2 st, float sigmaR
 					// Direction, S - N(Xi)
 					glm::vec2 S(st);
 					S = S - glm::vec2(gaussianSeed.z, gaussianSeed.w);
-
+                                       
 					// We reduce the 4D gaussian into 2D by fixing S, see appendix
 					glm::mat2 invCov = data.A;
 					glm::vec2 u0 = -((glm::inverse(data.A)) * data.B) * S;
 					float inner =
 						glm::dot(S, data.C * S) - glm::dot(u0, data.A * u0);
 					float c = data.coeff * glm::exp(-0.5f * inner);
-
+                   
 					// Calculate the resulting gaussian by multiplying Gp * Gi
 					glm::mat2 resultInvCovariance = invCov + footprintCovarianceInv;
 					glm::mat2 resultCovariance = glm::inverse(resultInvCovariance);
@@ -165,16 +180,22 @@ float NormalToNDFConverter::evaluatePNDF(glm::vec2 U, glm::vec2 st, float sigmaR
 							footprintMean -
 								glm::vec2(gaussianSeed.x, gaussianSeed.y),
 							footprintCovarianceInv);
+					
 
 					float det = (glm::determinant(resultCovariance * 2.f *
 												  glm::pi<float>()));
 
-					if (det > 0.f) accum += resultC * glm::sqrt(det);
+					if (det > 0.f) {
+                        accum += resultC * glm::sqrt(det);
+                    }
+                
 				}
 			}
+        
+			accum /= (mX / (float)regionSize);
 
-			accum /= (mX / (float)regionSize.x);
 
+               
 			return accum;
 
 		} catch (std::exception e) {
@@ -182,6 +203,62 @@ float NormalToNDFConverter::evaluatePNDF(glm::vec2 U, glm::vec2 st, float sigmaR
                         << std::endl;
 		}
 }
+
+glm::vec3 NormalToNDFConverter::sampleWh(glm::vec2 U, int regionSize)
+{
+     try {
+		glm::vec2 regionCenter = glm::vec2{U.x * normalMap.width, U.y * normalMap.height};
+		glm::vec2 regionSizeVec = glm::vec2{regionSize, regionSize};
+		glm::vec2 regionOrigin = regionCenter - (0.5f * regionSizeVec);
+
+
+		// Generate random point U in the footprint
+		float randomXOffset = ((float)rand() / RAND_MAX);
+		float randomYOffset = ((float)rand() / RAND_MAX);
+		glm::ivec2 randomPointU = glm::ivec2 {glm::clamp(int(regionOrigin.x + regionSize * randomXOffset), 0, normalMap.width - 1), 
+											glm::clamp(int(regionOrigin.y + regionSize * randomYOffset), 0, normalMap.width - 1)};
+
+	
+		// Find a Gaussian covering random point U
+		GaussianData sampledGaussian = gaussians[randomPointU.y * normalMap.width + randomPointU.x];
+
+		// Seedpoint density + std. dev. of seedpoint gaussians
+		float h = 1.0f / normalMap.width;
+		float sigmaH = h / glm::sqrt(8.0f * glm::log(2.0f));
+		std::random_device rd{};
+		std::mt19937 gen{rd()};
+
+		// Sample random normal from the Gaussian covering random point U
+		// x^2 + y^2 + z^2 = 1 --> z = sqrt(1 - x^2 - y^2)
+		float zSquared =
+			1.01f - (sampledGaussian.seedPoint.z * sampledGaussian.seedPoint.z) -
+			(sampledGaussian.seedPoint.w * sampledGaussian.seedPoint.w);
+
+		//if (zSquared < 0.0f) {
+		//		std::cout << "S: " << sampledGaussian.seedPoint.z << std::endl;
+		//		std::cout << "T: " << sampledGaussian.seedPoint.w << std::endl;
+  //              std::cout << zSquared << std::endl;
+		//		std::cout << "Negative z squared!" << std::endl;
+		//}
+        float z = sqrtf(zSquared);
+
+		std::normal_distribution<float> samplenormalX{sampledGaussian.seedPoint.z, sigmaH};
+		std::normal_distribution<float> samplenormalY{sampledGaussian.seedPoint.w, sigmaH};
+		std::normal_distribution<float> samplenormalZ{z, sigmaH};
+
+		float sampledX = samplenormalX(gen);
+		float sampledY = samplenormalY(gen);
+		float sampledZ = samplenormalZ(gen);
+
+		glm::vec3 new_Wh = glm::vec3{sampledX, sampledY, sampledZ};
+		return glm::normalize(new_Wh);
+	}
+	catch (std::exception e)
+	{
+		std::cout << "Something went wrong while sampling w_h!" << std::endl;
+	}
+}
+
 
 void NormalToNDFConverter::generateGaussianCurvedElements(float sigmaR) {
     int mX = normalMap.width;
@@ -205,6 +282,7 @@ void NormalToNDFConverter::generateGaussianCurvedElements(float sigmaR) {
         GaussianData newGaussian;
 
         glm::vec2 normal = sampleNormalMap(normalMap, u_i);
+
         newGaussian.seedPoint = glm::vec4{u_i.x, u_i.y, normal.x, normal.y};
 
         glm::mat2 jacobian = sampleNormalMapJacobian(normalMap, u_i);
@@ -250,7 +328,7 @@ void NormalToNDFConverter::generateGaussianCurvedElements(float sigmaR) {
         float det = glm::determinant(glm::inverse(invCov4D) * 2.f *
                                         glm::pi<float>());
 
-        if (det <= 0.0f) {
+        if (det <= 0.0f || isnan(det)) {
             newGaussian.coeff = 0.0f;
         } else {
             newGaussian.coeff = h * h / glm::sqrt(det);

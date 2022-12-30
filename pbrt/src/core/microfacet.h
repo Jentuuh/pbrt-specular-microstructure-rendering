@@ -84,20 +84,25 @@ class GlitterDistribution : public MicrofacetDistribution {
   public:
     // GlitterDistribution Public Methods
     static inline Float RoughnessToAlpha(Float roughness);
-    GlitterDistribution(Float alphax, Float alphay, Point2f uv, std::shared_ptr<NormalToNDFConverter> converter,
+    GlitterDistribution(Float alphax, Float alphay, Point2f uv, int pndfRegionSize, Normal3f normal, std::shared_ptr<NormalToNDFConverter> converter,
                                 bool samplevis = true)
         : MicrofacetDistribution(samplevis),
           alphax(std::max(Float(0.001), alphax)),
           alphay(std::max(Float(0.001), alphay)),
           texCoords(uv),
+          pndfRegionSize(pndfRegionSize),
+          shadingNormal(normal),
           converter{converter} {}
     Float D(const Vector3f &wh) const;
     Vector3f Sample_wh(const Vector3f &wo, const Point2f &u) const;
+    Float Pdf(const Vector3f &wo, const Vector3f &wh) const;
     std::string ToString() const;
 
   private:
     std::shared_ptr<NormalToNDFConverter> converter;
     Point2f texCoords;
+    Normal3f shadingNormal;
+    int pndfRegionSize;
 
     // GlitterDistribution Private Methods
     Float Lambda(const Vector3f &w) const;

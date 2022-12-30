@@ -233,7 +233,10 @@ Spectrum MicrofacetReflection::f(const Vector3f &wo, const Vector3f &wi) const {
     // For the Fresnel call, make sure that wh is in the same hemisphere
     // as the surface normal, so that TIR is handled correctly.
     Spectrum F = fresnel->Evaluate(Dot(wi, Faceforward(wh, Vector3f(0,0,1))));
-    return R * distribution->D(wh) * distribution->G(wo, wi) * F /
+    Float G = distribution->G(wo, wi);
+    Float D = distribution->D(wh);
+
+    return R * D * G * F /
            (4 * cosThetaI * cosThetaO);
 }
 
