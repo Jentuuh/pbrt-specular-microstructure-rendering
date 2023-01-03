@@ -21,7 +21,8 @@ namespace pbrt {
             const std::shared_ptr<Texture<Float>>& urough,
             const std::shared_ptr<Texture<Float>>& vrough,
             const std::shared_ptr<Texture<Float>>& bump,
-            bool remapRoughness);
+            bool remapRoughness,
+            const std::string normalMapFileLocation);
 
         void ComputeScatteringFunctions(SurfaceInteraction* si, MemoryArena& arena,
             TransportMode mode,

@@ -12,7 +12,8 @@ namespace pbrt {
         const std::shared_ptr<Texture<Float>>& uRoughness,
         const std::shared_ptr<Texture<Float>>& vRoughness,
         const std::shared_ptr<Texture<Float>>& bumpMap,
-        bool remapRoughness)
+        bool remapRoughness,
+        const std::string normalMapFileLocation)
         : 
         eta(eta),
         k(k),
@@ -22,9 +23,8 @@ namespace pbrt {
         bumpMap(bumpMap),
         remapRoughness(remapRoughness) {
     
-        Image normalMapImage = {"../../textures/scratches_large.png", 3};
-        this->converter =
-            std::make_shared<NormalToNDFConverter>(normalMapImage);
+        //Image normalMapImage = {"../../textures/scratches_large3.png", 3};
+        this->converter = std::make_shared<NormalToNDFConverter>(Image{normalMapFileLocation, 3});
     }
 
    
@@ -53,7 +53,7 @@ namespace pbrt {
 
         MicrofacetDistribution* distrib =
             ARENA_ALLOC(arena, GlitterDistribution)(
-                uRough, vRough, si->uv, 64, si->shading.n, this->converter);
+                uRough, vRough, si->uv, 12, si->shading.n, this->converter);
         si->bsdf->Add(ARENA_ALLOC(arena, MicrofacetReflection)(1., distrib, frMf));
     }
 
@@ -107,9 +107,13 @@ namespace pbrt {
             mp.GetFloatTextureOrNull("vroughness");
         std::shared_ptr<Texture<Float>> bumpMap =
             mp.GetFloatTextureOrNull("bumpmap");
+
+        std::string fileName;
+        fileName = mp.FindString("filename", fileName);
+
         bool remapRoughness = mp.FindBool("remaproughness", true);
         return new GlitterMaterial(eta, k, roughness, uRoughness, vRoughness, bumpMap,
-            remapRoughness);
+            remapRoughness, fileName);
     }
 
 }

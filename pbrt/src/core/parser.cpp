@@ -846,6 +846,7 @@ static void parse(std::unique_ptr<Tokenizer> t) {
         std::string n = toString(dequoted);
         ParamSet params =
             parseParams(nextToken, ungetToken, arena, spectrumType);
+
         apiFunc(n, std::move(params));
     };
 

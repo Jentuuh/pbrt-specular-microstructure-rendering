@@ -146,7 +146,7 @@ Spectrum PathIntegrator::Li(const RayDifferential &r, const Scene &scene,
         }*/
 
         VLOG(2) << "Sampled BSDF, f = " << f << ", pdf = " << pdf;
-        if (f.IsBlack() || pdf <= 0.0001f) break;
+        if (f.IsBlack() || pdf == 0.0f) break;
         beta *= f * AbsDot(wi, isect.shading.n) / pdf;
 
         VLOG(2) << "Updated beta = " << beta;

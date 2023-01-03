@@ -1,26 +1,27 @@
-LookAt 2.96 2.73 0.5  2.78 2.73 1   0 1 0
+LookAt 2.96 2.83 -2.0  2.78 3.00 1   0 1 0
 Camera "perspective" "float fov" [39]
 Film "image"
    "string filename" ["cornell.exr"]
-   "integer xresolution" [3840]
-   "integer yresolution" [2160]
+   "integer xresolution" [1920]
+   "integer yresolution" [1080]
 
 Integrator "path"
-Sampler "halton" "integer pixelsamples" [100]
+Sampler "halton" "integer pixelsamples" [8]
 # Renderer "metropolis" "integer samplesperpixel" [128] "bool dodirectseparately" ["false"]
 # Sampler "stratified" "integer xsamples" [8] "integer ysamples" [8]
 
-
-
 WorldBegin
-MakeNamedMaterial "myglitter" "string type" "glitter" "rgb eta" [ 1.0 1.0 1.0] "rgb k"  [ .9 .0 .0 ]
-MakeNamedMaterial "mymetal" "string type" "metal" "rgb eta" [ 1.0 1.0 1.0] "rgb k"  [ .9 .9 .9 ]
+MakeNamedMaterial "myglitter_stainless" "string type" "glitter" "rgb eta" [ .9 .9 .9] "rgb k"  [ 1.1 1.12 1.15 ] "string filename" ["../../textures/deep_scratches.png"]
+MakeNamedMaterial "myglitter_waves" "string type" "glitter" "rgb eta" [ .9 .9 .9] "rgb k"  [ 1.1 1.12 1.15 ] "string filename" ["../../textures/normal1_4x4.png"]
+MakeNamedMaterial "mymetal_stainless" "string type" "metal" "rgb eta" [ .9 .9 .9] "rgb k" [ 1.1 1.12 1.15 ]  # [ .01 .012 .015 ]
+MakeNamedMaterial "my_mix1" "string type" "mix" "string namedmaterial1" "myglitter_stainless" "string namedmaterial2" "mymetal_stainless" "rgb amount" [.5 .5 .5]
+MakeNamedMaterial "my_mix2" "string type" "mix" "string namedmaterial1" "my_mix1" "string namedmaterial2" "myglitter_waves" "rgb amount" [.5 .5 .5]
 
 Scale 0.01 0.01 0.01
 
 # light source
 AttributeBegin
-AreaLightSource "area"  "color L" [50 50 50] "integer nsamples" [8]
+AreaLightSource "area"  "color L" [100 100 100] "integer nsamples" [8]
 Material "matte" "color Kd" [1 1 1]
 
    Shape "trianglemesh"
@@ -31,6 +32,21 @@ Material "matte" "color Kd" [1 1 1]
       213.0 548.7 332.0
       213.0 548.7 227.0 ]
 AttributeEnd
+
+# light source front
+#AttributeBegin
+#AreaLightSource "area"  "color L" [500 500 500] "integer nsamples" [8]
+#Material "matte" "color Kd" [1 1 1]
+#
+#   Shape "trianglemesh"
+#   "integer indices" [ 0 1 2  2 3 0 ]
+#   "point P" [
+# 	320.0 200.0 -500.0
+#	320.0 250.0 -500.0 
+#     270.0 250.0 -500.0
+#  	270.0 200.0 -500.0
+#      ]
+#AttributeEnd
 
 #red wall
 
@@ -154,89 +170,90 @@ AttributeBegin
 AttributeEnd
 
 
+##
+## short block
+##
 #
-# short block
+## material { glass ior 1.5 r { constant spd { 1 0.95 } } }
 #
-
-# material { glass ior 1.5 r { constant spd { 1 0.95 } } }
+#AttributeBegin
+#   Shape "trianglemesh"
+#   "integer indices" [
+#      3 2 0 2 1 0
+#      7 6 4 6 5 4
+#      11 10 8 10 9 8
+#      15 14 12 14 13 12
+#      19 18 16 18 17 16
+#   ]
+#   "point P" [
+#    130.0 165.0  65.0
+#     82.0 165.0 225.0
+#    240.0 165.0 272.0
+#    290.0 165.0 114.0
+#    290.0   0.0 114.0
+#    290.0 165.0 114.0
+#    240.0 165.0 272.0
+#    240.0   0.0 272.0
+#    130.0   0.0  65.0
+#    130.0 165.0  65.0
+#    290.0 165.0 114.0
+#    290.0   0.0 114.0
+#     82.0   0.0 225.0
+#     82.0 165.0 225.0
+#    130.0 165.0  65.0
+#    130.0   0.0  65.0
+#    240.0   0.0 272.0
+#    240.0 165.0 272.0
+#     82.0 165.0 225.0
+#     82.0   0.0 225.0 ]
+#AttributeEnd
+#
+#
+##
+## tall block
+##
+#
+#AttributeBegin
+#   Shape "trianglemesh"
+#   "integer indices" [
+#      3 2 0 2 1 0
+#      7 6 4 6 5 4
+#      11 10 8 10 9 8
+#      15 14 12 14 13 12
+#      19 18 16 18 17 16
+#   ]
+#   "point P" [
+#    423.0 330.0 247.0
+#    265.0 330.0 296.0
+#    314.0 330.0 456.0
+#    472.0 330.0 406.0
+#    423.0   0.0 247.0
+#    423.0 330.0 247.0
+#    472.0 330.0 406.0
+#    472.0   0.0 406.0
+#    472.0   0.0 406.0
+#    472.0 330.0 406.0
+#    314.0 330.0 456.0
+#    314.0   0.0 456.0
+#    314.0   0.0 456.0
+#    314.0 330.0 456.0
+#    265.0 330.0 296.0
+#    265.0   0.0 296.0
+#    265.0   0.0 296.0
+#    265.0 330.0 296.0
+#    423.0 330.0 247.0
+#    423.0   0.0 247.0]
+#AttributeEnd
 
 AttributeBegin
-   Shape "trianglemesh"
-   "integer indices" [
-      3 2 0 2 1 0
-      7 6 4 6 5 4
-      11 10 8 10 9 8
-      15 14 12 14 13 12
-      19 18 16 18 17 16
-   ]
-   "point P" [
-    130.0 165.0  65.0
-     82.0 165.0 225.0
-    240.0 165.0 272.0
-    290.0 165.0 114.0
-    290.0   0.0 114.0
-    290.0 165.0 114.0
-    240.0 165.0 272.0
-    240.0   0.0 272.0
-    130.0   0.0  65.0
-    130.0 165.0  65.0
-    290.0 165.0 114.0
-    290.0   0.0 114.0
-     82.0   0.0 225.0
-     82.0 165.0 225.0
-    130.0 165.0  65.0
-    130.0   0.0  65.0
-    240.0   0.0 272.0
-    240.0 165.0 272.0
-     82.0 165.0 225.0
-     82.0   0.0 225.0 ]
-AttributeEnd
-
-
-#
-# tall block
-#
-
-AttributeBegin
-   Shape "trianglemesh"
-   "integer indices" [
-      3 2 0 2 1 0
-      7 6 4 6 5 4
-      11 10 8 10 9 8
-      15 14 12 14 13 12
-      19 18 16 18 17 16
-   ]
-   "point P" [
-    423.0 330.0 247.0
-    265.0 330.0 296.0
-    314.0 330.0 456.0
-    472.0 330.0 406.0
-    423.0   0.0 247.0
-    423.0 330.0 247.0
-    472.0 330.0 406.0
-    472.0   0.0 406.0
-    472.0   0.0 406.0
-    472.0 330.0 406.0
-    314.0 330.0 456.0
-    314.0   0.0 456.0
-    314.0   0.0 456.0
-    314.0 330.0 456.0
-    265.0 330.0 296.0
-    265.0   0.0 296.0
-    265.0   0.0 296.0
-    265.0 330.0 296.0
-    423.0 330.0 247.0
-    423.0   0.0 247.0]
-AttributeEnd
-
-AttributeBegin
-Translate 250 250 250
-
-Scale 20 20 20
+Translate 300 400 400
+Rotate 15 0 1 0
+Scale 70 70 70
  # Eta is refractive index (how much the light is able to 'bend', per color channel (wavelength)), k is absorption coefficient
- Material "glitter" "rgb eta" [ 2.0 2.0 2.0] "rgb k"  [ .2 .5 .2 ]
- # Material "mix" "string namedmaterial1" "myglitter" "string namedmaterial2" "mymetal"
- # NamedMaterial "mymetal"
+ # Material "glitter" "rgb eta" [ .9 .9 .9] "rgb k"  [ 1.1 1.12 1.15 ] 
+ # Material "metal"  "rgb eta" [ .9 .9 .9] "rgb k" [ 1.1 1.12 1.15 ]
+ # Material "mix" "string namedmaterial1" "myglitter_stainless" "string namedmaterial2" "mymetal_stainless" "rgb amount" [.8 .8 .8]
+ NamedMaterial "my_mix2"
     Include "geometry/sphere.pbrt"
 AttributeEnd
 

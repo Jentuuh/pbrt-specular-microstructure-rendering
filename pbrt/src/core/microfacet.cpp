@@ -413,7 +413,9 @@ Vector3f TrowbridgeReitzDistribution::Sample_wh(const Vector3f &wo,
 }
 
 Float GlitterDistribution::Pdf(const Vector3f& wo, const Vector3f& wh) const {
-    return D(wh);
+
+    Float pdf = D(wh);
+    return pdf < 0.0001f ? 0.0f : pdf;
 }
 
 Float MicrofacetDistribution::Pdf(const Vector3f &wo,
