@@ -1,8 +1,3 @@
 # pbrt-specular-microstructure-rendering
 
-## Tasks
-1. Create high-resolution normal map
-2. Convert normal map into flat elements gaussian mixtures
-3. Do the same with curved elements
-4. Sampling P-BRDF
-5. Evaluating P-NDF (opstellen van P-NDF d.m.v. mixture of Gaussians + invullen in microsurface formule)
+This repository provides a working minimal implementation in pbrt (v3) of the algorithm proposed in the paper "Position-normal distributions for efficient rendering of specular microstructure" by Yan et al. . We provide a class that converts normal maps to Gaussian mixtures and a Glitter Material class that overrides the distribution function **D**.
