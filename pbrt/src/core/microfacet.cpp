@@ -261,34 +261,6 @@ Vector3f GlitterDistribution::Sample_wh(const Vector3f &wo,
         glm::vec3 new_wh =
             converter->sampleWh(glm::vec2{texCoords.x, texCoords.y}, 24);
         return Vector3f{new_wh.x, new_wh.y, new_wh.z};
-  
- /*
-    if (!sampleVisibleArea) {
-        Float cosTheta = 0, phi = (2 * Pi) * u[1];
-        if (alphax == alphay) {
-            Float tanTheta2 = alphax * alphax * u[0] / (1.0f - u[0]);
-            cosTheta = 1 / std::sqrt(1 + tanTheta2);
-        } else {
-            phi =
-                std::atan(alphay / alphax * std::tan(2 * Pi * u[1] + .5f * Pi));
-            if (u[1] > .5f) phi += Pi;
-            Float sinPhi = std::sin(phi), cosPhi = std::cos(phi);
-            const Float alphax2 = alphax * alphax, alphay2 = alphay * alphay;
-            const Float alpha2 =
-                1 / (cosPhi * cosPhi / alphax2 + sinPhi * sinPhi / alphay2);
-            Float tanTheta2 = alpha2 * u[0] / (1 - u[0]);
-            cosTheta = 1 / std::sqrt(1 + tanTheta2);
-        }
-        Float sinTheta =
-            std::sqrt(std::max((Float)0., (Float)1. - cosTheta * cosTheta));
-        wh = SphericalDirection(sinTheta, cosTheta, phi);
-        if (!SameHemisphere(wo, wh)) wh = -wh;
-    } else {
-        bool flip = wo.z < 0;
-        wh = TrowbridgeReitzSample(flip ? -wo : wo, alphax, alphay, u[0], u[1]);
-        if (flip) wh = -wh;
-    }
-    return wh;*/
 }
 
 Float BeckmannDistribution::Lambda(const Vector3f &w) const {
@@ -412,9 +384,16 @@ Vector3f TrowbridgeReitzDistribution::Sample_wh(const Vector3f &wo,
     return wh;
 }
 
+/**
+* Glitter distribution overrides `Pdf()`. This is step 3 of the algorithm, as mentioned in
+* the video (https://dl.acm.org/doi/10.1145/2897824.2925915).
+*/
 Float GlitterDistribution::Pdf(const Vector3f& wo, const Vector3f& wh) const {
 
+    // Pdf evaluation is just another P-NDF evaluation
     Float pdf = D(wh);
+
+    // For miniscule probabilities, return 0 to prevent infinity values in integrator
     return pdf < 0.0001f ? 0.0f : pdf;
 }
 
