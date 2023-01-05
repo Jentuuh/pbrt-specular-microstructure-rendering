@@ -3,6 +3,9 @@
 #include <string>
 #include <vector>
 
+/**
+* Simple class to easily load, manipulate and save images.
+*/
 class Image {
   public:
     Image(std::string filename, int imageChannels);  // Image from file

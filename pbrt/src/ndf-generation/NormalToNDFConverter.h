@@ -17,8 +17,7 @@ public:
 	float evaluatePNDF(glm::vec2 U, glm::vec2 st, float sigmaR, int regionSize);
     glm::vec3 sampleWh(glm::vec2 U, int regionSize);
 	void generateGaussianCurvedElements(float sigmaR);
-	void generate4DNDF(int width, int height, float sigmaR);
-	void curvedElements4DNDF(Image& ndfImage, Image& normalMap, int width, int height, float sigmaR);
+
 private:
 	Image normalMap;
 	std::vector<GaussianData> gaussians;
