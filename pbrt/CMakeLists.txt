@@ -364,6 +364,23 @@ SET_PROPERTY(TARGET Ptex_static ptxinfo halftest ftest rtest wtest PROPERTY FOLD
 INCLUDE_DIRECTORIES ( src/ext/ptex/src/ptex )
 
 ###########################################################################
+# pcg32
+
+ADD_SUBDIRECTORY(src/ext/pcg32)
+INCLUDE_DIRECTORIES (src/ext/pcg32)
+
+###########################################################################
+# stb
+ADD_SUBDIRECTORY(src/ext/stb)
+INCLUDE_DIRECTORIES (src/ext/stb)
+
+###########################################################################
+# glm
+ADD_SUBDIRECTORY(src/ext/glm)
+INCLUDE_DIRECTORIES (src/ext/glm)
+
+
+###########################################################################
 # On to pbrt...
 
 SET ( PBRT_CORE_SOURCE
@@ -461,6 +478,7 @@ FILE ( GLOB PBRT_SOURCE
   src/shapes/*
   src/textures/*
   src/media/*
+  src/ndf-generation/*
   )
 
 INCLUDE_DIRECTORIES ( src )
@@ -479,7 +497,7 @@ SOURCE_GROUP (samplers REGULAR_EXPRESSION src/samplers/.*)
 SOURCE_GROUP (shapes REGULAR_EXPRESSION src/shapes/.*)
 SOURCE_GROUP (textures REGULAR_EXPRESSION src/textures/.*)
 SOURCE_GROUP (media REGULAR_EXPRESSION src/media/.*)
-
+SOURCE_GROUP (ndf-generation REGULAR_EXPRESSION src/ndf-generation/.*)
 ###########################################################################
 # pbrt libraries and executables
 

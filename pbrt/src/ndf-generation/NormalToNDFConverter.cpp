@@ -15,11 +15,6 @@ NormalToNDFConverter::NormalToNDFConverter(Image normalMap) : normalMap{normalMa
 inline
 float EvaluateGaussian(float c, const glm::vec2& x, const glm::vec2& u, const glm::mat2& InvCov)
 {
- //   std::cout << "vec2 x: " << x.x << "," << x.y << "vec2 u: " << u.x << ","
- //             << u.y << std::endl; 
-	//std::cout << glm::dot(x - u, InvCov * (x - u)) << std::endl; 
-	//std::cout << "Coefficient: " << c << std::endl; 
-
 	float inner = glm::dot(x - u, InvCov * (x - u));
 	return c * glm::exp(-.5f * inner);
 }
@@ -557,20 +552,5 @@ void NormalToNDFConverter::curvedElements4DNDF(Image& ndfImage, Image& normalMap
 
 	ndfImage.saveImage("../Output/ndfImage.png");
 
-	//Image testResult = { width, height };
-	//for (int y = 0; y < width; y++)
-	//{
-	//	for (int x = 0; x < height; x++)
-	//	{
-	//		glm::vec2 uv = { float(x) / float(width), float(y) / float(height) };
-	//		glm::vec2 st = sampleNormalMap(normalMap, uv);
-	//		glm::vec4 pixelEvaluation = { uv.x, uv.y, st.x, st.y };
-
-	//		float response = gaussians[131150].evaluateFormula12(uv, st, sigmaH2, sigmaR2);
-	//		char responseColor[3] = { response * 255.0f, response * 255.0f, response * 255.0f };
-	//		testResult.writePixel(x, y, responseColor);
-	//	}
-	//}
-	//testResult.saveImage("../Data/testResult.png");
 	delete[] ndf;
 }

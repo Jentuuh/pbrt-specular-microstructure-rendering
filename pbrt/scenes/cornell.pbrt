@@ -1,4 +1,4 @@
-LookAt 2.96 2.83 -2.0  2.78 3.00 1   0 1 0
+LookAt 2.96 1.90 -1.5  2.78 2.00 1   0 1 0
 Camera "perspective" "float fov" [39]
 Film "image"
    "string filename" ["cornell.exr"]
@@ -6,26 +6,24 @@ Film "image"
    "integer yresolution" [1080]
 
 Integrator "path"
-Sampler "halton" "integer pixelsamples" [8]
-# Renderer "metropolis" "integer samplesperpixel" [128] "bool dodirectseparately" ["false"]
-# Sampler "stratified" "integer xsamples" [8] "integer ysamples" [8]
+Sampler "halton" "integer pixelsamples" [900]
 
 WorldBegin
-MakeNamedMaterial "myglitter_stainless" "string type" "glitter" "rgb eta" [ .9 .9 .9] "rgb k"  [ 1.1 1.12 1.15 ] "string filename" ["../../textures/deep_scratches.png"]
-MakeNamedMaterial "myglitter_waves" "string type" "glitter" "rgb eta" [ .9 .9 .9] "rgb k"  [ 1.1 1.12 1.15 ] "string filename" ["../../textures/normal1_4x4.png"]
-MakeNamedMaterial "mymetal_stainless" "string type" "metal" "rgb eta" [ .9 .9 .9] "rgb k" [ 1.1 1.12 1.15 ]  # [ .01 .012 .015 ]
-MakeNamedMaterial "my_mix1" "string type" "mix" "string namedmaterial1" "myglitter_stainless" "string namedmaterial2" "mymetal_stainless" "rgb amount" [.5 .5 .5]
-MakeNamedMaterial "my_mix2" "string type" "mix" "string namedmaterial1" "my_mix1" "string namedmaterial2" "myglitter_waves" "rgb amount" [.5 .5 .5]
+MakeNamedMaterial "myglitter_stainless" "string type" "glitter" "rgb eta" [ .3 .7 .7] "rgb k" [ 1.1 1.12 1.15 ] "string filename" ["../../textures/flakes_8x8.png"]
+MakeNamedMaterial "mymetal_stainless" "string type" "metal" "rgb eta" [ .15 .30 .85] "rgb k" [ 1.1 1.12 .01 ] #[ 2.779 2.779 2.779 ]  # [ .01 .012 .015 ]
 
 Scale 0.01 0.01 0.01
 
+LightSource "distant" "rgb L" [ 3 3 3 ] "point from" [0 0 -20]
+#LightSource "infinite" "rgb L" [ 3 3 3 ] 
+
 # light source
 AttributeBegin
-AreaLightSource "area"  "color L" [100 100 100] "integer nsamples" [8]
+AreaLightSource "area"  "color L" [15 15 15] "integer nsamples" [8]
 Material "matte" "color Kd" [1 1 1]
 
    Shape "trianglemesh"
-   "integer indices" [ 0 1 2  2 3 0 ]
+  "integer indices" [ 0 1 2  2 3 0 ]
    "point P" [
       343.0 548.7 227.0
       343.0 548.7 332.0
@@ -246,14 +244,13 @@ AttributeEnd
 #AttributeEnd
 
 AttributeBegin
-Translate 300 400 400
+Translate 300 200 200
 Rotate 15 0 1 0
 Scale 70 70 70
  # Eta is refractive index (how much the light is able to 'bend', per color channel (wavelength)), k is absorption coefficient
  # Material "glitter" "rgb eta" [ .9 .9 .9] "rgb k"  [ 1.1 1.12 1.15 ] 
- # Material "metal"  "rgb eta" [ .9 .9 .9] "rgb k" [ 1.1 1.12 1.15 ]
- # Material "mix" "string namedmaterial1" "myglitter_stainless" "string namedmaterial2" "mymetal_stainless" "rgb amount" [.8 .8 .8]
- NamedMaterial "my_mix2"
+ #Material "metal"  "rgb eta" [ .9 .9 .9] "rgb k" [ 1.1 1.12 1.15 ]
+ Material "mix" "string namedmaterial1" "myglitter_stainless" "string namedmaterial2" "mymetal_stainless" "rgb amount" [.6 .6 .6]
     Include "geometry/sphere.pbrt"
 AttributeEnd
 

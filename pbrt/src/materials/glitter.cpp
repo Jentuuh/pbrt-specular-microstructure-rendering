@@ -23,7 +23,6 @@ namespace pbrt {
         bumpMap(bumpMap),
         remapRoughness(remapRoughness) {
     
-        //Image normalMapImage = {"../../textures/scratches_large3.png", 3};
         this->converter = std::make_shared<NormalToNDFConverter>(Image{normalMapFileLocation, 3});
     }
 
@@ -48,8 +47,6 @@ namespace pbrt {
         }
         Fresnel* frMf = ARENA_ALLOC(arena, FresnelConductor)(1., eta->Evaluate(*si),
             k->Evaluate(*si));
-
-        //std::cout << "Intersection UV coords:" << si->uv << std::endl;
 
         MicrofacetDistribution* distrib =
             ARENA_ALLOC(arena, GlitterDistribution)(
