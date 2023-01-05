@@ -7,7 +7,7 @@
 #include <iostream>
 
 #include "stb_image.h"
-// test
+
 Image::Image(std::string filename, int imageChannels) {
     int normalWidth;
     int normalHeight;
