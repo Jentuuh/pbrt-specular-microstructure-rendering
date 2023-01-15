@@ -133,7 +133,7 @@ float NormalToNDFConverter::evaluatePNDF(glm::vec2 U, glm::vec2 st,
             glm::vec2 from = glm::clamp(regionCenter - regionSizeVec * .5f, glm::vec2(), glm::vec2(mX - 1, mY - 1));
             glm::vec2 to = glm::clamp(regionCenter + regionSizeVec * .5f, glm::vec2(), glm::vec2(mX - 1, mY - 1));
 
-			// Model pixel footprint area as a 2D-Gaussian instead of a square area
+			// Model pixel footprint area as a 2D-Gaussian instead of a square region
 			float footprintRadius = regionSizeVec.x * .5f / (float)mX;
 			float sigmaP = footprintRadius * 0.0625f;
 			glm::mat2 footprintCovarianceInv =
@@ -156,7 +156,7 @@ float NormalToNDFConverter::evaluatePNDF(glm::vec2 U, glm::vec2 st,
 					GaussianData data = gaussians[gY * mX + gX];
 					glm::vec4 gaussianSeed = data.seedPoint;
 
-					// Direction, S - N(Xi)
+					// Direction, S - N(Xi) (we measure how much the normal at this element deviates from the half-vector that was passed)
 					glm::vec2 S(st);
 					S = S - glm::vec2(gaussianSeed.z, gaussianSeed.w);
 					
@@ -183,7 +183,7 @@ float NormalToNDFConverter::evaluatePNDF(glm::vec2 U, glm::vec2 st,
 					// ====================================================
 					// Calculating scaling coefficient c, Paper formula 20
 					// ====================================================
-					float resultC =
+					float scalingCoeff =
 						EvaluateGaussian(c, resultMean, u0, invCov) *
 						EvaluateGaussian(
 							GetGaussianCoefficient(footprintCovarianceInv),
@@ -199,11 +199,12 @@ float NormalToNDFConverter::evaluatePNDF(glm::vec2 U, glm::vec2 st,
 												  glm::pi<float>()));
 					
 					if (det > 0.f) {
-                        accum += resultC * glm::sqrt(det);
+                        accum += scalingCoeff * glm::sqrt(det);
                     }
 				}
 			}
-        
+			
+			// Average out contributions
 			accum /= (mX / (float)regionSize);
                
 			return accum;
@@ -220,7 +221,8 @@ glm::vec3 NormalToNDFConverter::sampleWh(glm::vec2 U, int regionSize)
 		glm::vec2 regionSizeVec = glm::vec2{regionSize, regionSize};
 		glm::vec2 regionOrigin = regionCenter - (0.5f * regionSizeVec);
 
-		// Generate random point U in the footprint
+		// Generate random point U in the footprint (note that this is now a square region, 
+		// in the video we mention that we would like to test the effect of transforming this to a Gaussian region)
 		float randomXOffset = ((float)rand() / RAND_MAX);
 		float randomYOffset = ((float)rand() / RAND_MAX);
 		glm::ivec2 randomPointU = glm::ivec2 {glm::clamp(int(regionOrigin.x + regionSize * randomXOffset), 0, normalMap.width - 1), 
@@ -256,8 +258,8 @@ glm::vec3 NormalToNDFConverter::sampleWh(glm::vec2 U, int regionSize)
 }
 
 /**
-* Generates Gaussian curved elements for the normal map that this converter was given. Gaussian elements provide a notion of the local position-normal 
-* distribution at a certain coordinate in the normal map.
+* Pre-processing step. Generates Gaussian curved elements for the normal map that this converter was given. 
+* Gaussian elements provide an approximation of the local position-normal distribution at a certain coordinate in the normal map.
 */
 void NormalToNDFConverter::generateGaussianCurvedElements(float sigmaR) {
     int mX = normalMap.width;
@@ -275,6 +277,7 @@ void NormalToNDFConverter::generateGaussianCurvedElements(float sigmaR) {
     const float invSigmaH2 = 1.f / sigmaH2;
     const float invSigmaR2 = 1.f / sigmaR2;
 
+	// Loop over normal map
     for (int i = 0; i < mX * mY; i++) {
         float x = (i % mX);
         float y = (i / mX);
@@ -298,6 +301,9 @@ void NormalToNDFConverter::generateGaussianCurvedElements(float sigmaR) {
         newGaussian.B = -transposedJacobian * invSigmaR2;
         newGaussian.C = glm::mat2(invSigmaR2);
 
+		// Inverse covariance matrix is 4x4, since we have 4D Gaussians
+		// It models the variance of the Gaussian element we are currently
+		// iterating over.
         glm::mat4 invCov4D;
 
         // Upper left
